@@ -1,35 +1,59 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KUMARIBO</title>
-  <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUMARIBO</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #1a237e, #4a148c, #880e4f);
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        .container h1 {
+            font-size: 2em;
+            color: #ff9800;
+            text-shadow: 0 0 10px #ff9800, 0 0 20px #fbc02d, 0 0 30px #ffeb3b;
+        }
+        .container p {
+            font-size: 1.2em;
+            margin: 15px 0;
+        }
+        .facebook-link {
+            color: #1877F2;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .facebook-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h1>DEVIL MAY CRY 2025</h1>
-  <div id="container">    
-    <div id="video-container">
-      <video id="video-player" class="video-js vjs-default-skin" controls preload="auto">
-        <source src="" type="video/mp4">
-        Tu navegador no soporta la reproducción de este video.
-      </video>
-      
-      
+    <div class="container">
+        <h1>¡Contenido Retirado!</h1>
+        <p>
+            Por falta de apoyo, este contenido se ha retirado de forma permanente. 
+            El contenido mostrado siempre será directo, sin anuncios, y para evitar futuras eliminaciones, 
+            te invitamos a interactuar con las publicaciones en Facebook: siguiendo, comentando y dejando tu "like".
+        </p>
+        <p>
+            Recuerda, el contenido retirado no se volverá a publicar. Regalame tu apoyo en
+            <a href="https://www.facebook.com/profile.php?id=61574853565088" class="facebook-link" target="_blank">Facebook</a>.
+        </p>
     </div>
-  
-  </div>
-   <div id="video-name">Nombre del Video</div>
-  <div id="controls">
-        <button id="prev-button" disabled>Anterior</button>
-        <button id="pause-button">Pausa/Reanudar</button>
-        <button id="next-button">Siguiente</button>
-      </div>
-       <div id="introduction">
-      <p>Ante la amenaza de un misterioso villano de abrir las puertas del infierno, un cazador de demonios endiabladamente guapo podría ser la mejor opción para salvar el mundo.</p>
-    </div>
-  <script src="Devil_may_cry.js"></script>
-  <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
 </body>
 </html>

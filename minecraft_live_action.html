@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUMARIBO</title>
+    <link rel="stylesheet" href="style.css"> <!-- Enlace al archivo CSS externo -->
+    <!-- Cargar la biblioteca HLS.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+    <h1>Una película de Minecraft</h1>
+    <div class="video-container"> <!-- Contenedor para el video -->
+        <video id="videoPlayer" controls width="800" height="450"></video>
+    </div>
+    <select id="qualitySelector">
+        <option value="https://v2.fiestareel.com/mov/2025/950387-92962/480/480p.m3u8" selected>Calidad 480p</option>
+        <option value="https://v2.fiestareel.com/mov/2025/950387-92962/720/720p.m3u8">Calidad 720p</option>
+        <option value="https://v2.fiestareel.com/mov/2025/950387-92962/1080/1080p.m3u8">Calidad 1080p</option>
+    </select>
+
+    <script>
+        const videoPlayer = document.getElementById('videoPlayer');
+        const qualitySelector = document.getElementById('qualitySelector');
+
+        function loadVideo(source) {
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(source);
+                hls.attachMedia(videoPlayer);
+                videoPlayer.play();
+            } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+                // Para navegadores como Safari que soportan HLS nativamente
+                videoPlayer.src = source;
+                videoPlayer.play();
+            } else {
+                console.error("HLS no es compatible con este navegador.");
+            }
+        }
+
+        // Cargar la calidad por defecto (480p)
+        loadVideo(qualitySelector.value);
+
+        // Cambiar la calidad según la selección del usuario
+        qualitySelector.addEventListener('change', (event) => {
+            loadVideo(event.target.value);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+/* Responsive Design - Versión Mejorada */
+@media (max-width: 768px) {
+    .video-player-container {
+        padding: 10px;
+    }
+    
+    .player-controls {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .control-group {
+        width: 100%;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+    }
+    
+    /* Grupo de botones principales (atrás, siguiente, servidor, pantalla completa) */
+    .left-controls {
+        order: 1;
+        display: flex;
+        justify-content: space-around;
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        border-radius: 8px;
+    }
+    
+    /* Grupo del título del episodio */
+    .center-controls {
+        order: 2;
+        padding: 0;
+    }
+    
+    /* Grupo de info de audio/subs */
+    .right-controls {
+        order: 3;
+        display: none; /* Ocultamos este grupo ya que movemos la info abajo */
+    }
+    
+    /* Controles básicos */
+    .basic-controls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .control-btn {
+        padding: 10px;
+        font-size: 1.2em;
+        margin: 0;
+        flex: 1;
+        max-width: 60px;
+        text-align: center;
+    }
+    
+    /* Selector de servidores en móvil */
+    .server-selector {
+        margin: 0 10px;
+        flex: 2;
+        min-width: 120px;
+    }
+    
+    .server-select {
+        width: 100%;
+    }
+    
+    /* Info del episodio */
+    .video-info {
+        order: 2;
+        margin-top: 10px;
+    }
+    
+    #episode-title {
+        max-width: 100%;
+        font-size: 1.1em;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    /* Info de audio/subs (nueva ubicación) */
+    .track-info {
+        order: 3;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+    }
+    
+    .track-info span {
+        margin: 0;
+        padding: 6px 12px;
+        font-size: 0.85em;
+    }
+    
+    /* Modal */
+    .modal-container {
+        width: 95%;
+        max-height: 85vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .player-title {
+        font-size: 1.4em;
+        padding: 10px 0;
+    }
+    
+    .player-controls {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .control-btn {
+        padding: 8px;
+        font-size: 1.1em;
+    }
+    
+    .server-selector {
+        min-width: 100px;
+    }
+    
+    #episode-title {
+        font-size: 1em;
+    }
+    
+    .track-info {
+        gap: 5px;
+    }
+    
+    .track-info span {
+        padding: 4px 8px;
+        font-size: 0.8em;
+    }
+}
+
+/* Estilos adicionales para pantallas muy pequeñas */
+@media (max-width: 360px) {
+    .left-controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .basic-controls {
+        width: 100%;
+    }
+    
+    .server-selector {
+        width: 100%;
+        max-width: 180px;
+        margin: 5px 0;
+    }
+    
+    .track-info {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .track-info span {
+        width: 100%;
+        text-align: center;
+    }
+}

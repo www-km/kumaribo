@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         {
             id: 2,
-            title: "Ejemplo de Contenido 2",
+            title: "Animekai",
             videoSources: [
-                { resolution: "Servidor Premium", iframeUrl: "https://megaup.cc/e/jpbgZjnzWS2JcOLxFLND5xHpCQ?autostart=true" },
+                { resolution: "Servidor Premium", iframeUrl: "https://megaup.cc/e/jpbgZjnzWS2JcOLxFLND5xHpCQ" },
                 { resolution: "Servidor Backup", iframeUrl: "https://ejemplo-backup.com/embed/2" }
             ],
             audioLanguage: "Español",

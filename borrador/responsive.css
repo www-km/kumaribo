@@ -1,168 +1,145 @@
-/* Responsive Design - Versión Mejorada */
+/* Responsive Design - Versión Final Ajustada */
 @media (max-width: 768px) {
     .video-player-container {
-        padding: 10px;
+        padding: 8px;
     }
     
     .player-controls {
+        display: flex;
         flex-direction: column;
-        align-items: stretch;
-        padding: 15px;
-        gap: 15px;
+        gap: 10px;
+        padding: 12px;
     }
     
-    .control-group {
-        width: 100%;
-        justify-content: center;
-        padding: 0;
-        margin: 0;
-    }
-    
-    /* Grupo de botones principales (atrás, siguiente, servidor, pantalla completa) */
+    /* Reordenamos los grupos */
     .left-controls {
         order: 1;
         display: flex;
-        justify-content: space-around;
-        background-color: rgba(0, 0, 0, 0.2);
-        padding: 10px;
-        border-radius: 8px;
-    }
-    
-    /* Grupo del título del episodio */
-    .center-controls {
-        order: 2;
-        padding: 0;
-    }
-    
-    /* Grupo de info de audio/subs */
-    .right-controls {
-        order: 3;
-        display: none; /* Ocultamos este grupo ya que movemos la info abajo */
-    }
-    
-    /* Controles básicos */
-    .basic-controls {
-        display: flex;
-        justify-content: center;
+        flex-direction: column;
         gap: 10px;
     }
     
-    .control-btn {
-        padding: 10px;
-        font-size: 1.2em;
-        margin: 0;
-        flex: 1;
-        max-width: 60px;
-        text-align: center;
+    .center-controls {
+        order: 3;
+        margin-top: 5px;
     }
     
-    /* Selector de servidores en móvil */
+    .right-controls {
+        order: 2;
+        margin-bottom: 5px;
+    }
+    
+    /* Fila de botones principales */
+    .main-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    /* Botones de navegación */
+    #prev-btn, #next-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background-color: rgba(255, 77, 77, 0.2);
+        font-size: 1.2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Botón de lista de episodios */
+    #episodes-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background-color: rgba(249, 203, 40, 0.2);
+        font-size: 1.1em;
+    }
+    
+    /* Selector de servidores */
     .server-selector {
-        margin: 0 10px;
-        flex: 2;
-        min-width: 120px;
+        width: 100%;
+        max-width: 220px;
+        margin: 0 auto;
     }
     
     .server-select {
         width: 100%;
-    }
-    
-    /* Info del episodio */
-    .video-info {
-        order: 2;
-        margin-top: 10px;
-    }
-    
-    #episode-title {
-        max-width: 100%;
-        font-size: 1.1em;
-        text-align: center;
-        margin-bottom: 10px;
-    }
-    
-    /* Info de audio/subs (nueva ubicación) */
-    .track-info {
-        order: 3;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 10px;
-    }
-    
-    .track-info span {
-        margin: 0;
-        padding: 6px 12px;
+        padding: 8px 12px;
         font-size: 0.85em;
+        border-radius: 18px;
     }
     
-    /* Modal */
-    .modal-container {
-        width: 95%;
-        max-height: 85vh;
-    }
-}
-
-@media (max-width: 480px) {
-    .player-title {
-        font-size: 1.4em;
-        padding: 10px 0;
-    }
-    
-    .player-controls {
-        padding: 12px;
-        gap: 12px;
-    }
-    
-    .control-btn {
-        padding: 8px;
-        font-size: 1.1em;
-    }
-    
-    .server-selector {
-        min-width: 100px;
+    /* Info del episodio (ahora al final) */
+    .video-info {
+        order: 4;
+        margin-top: 8px;
     }
     
     #episode-title {
         font-size: 1em;
+        text-align: center;
+        margin: 5px 0;
+        padding: 0 5px;
     }
     
+    /* Info de audio/subs */
     .track-info {
-        gap: 5px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
     }
     
     .track-info span {
-        padding: 4px 8px;
-        font-size: 0.8em;
+        padding: 5px 10px;
+        font-size: 0.75em;
+        border-radius: 12px;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Ajustes para pantallas muy pequeñas */
+    @media (max-width: 480px) {
+        .main-buttons {
+            gap: 12px;
+        }
+        
+        #prev-btn, #next-btn, #episodes-btn {
+            width: 40px;
+            height: 40px;
+            font-size: 1em;
+        }
+        
+        .server-selector {
+            max-width: 200px;
+        }
+        
+        .server-select {
+            padding: 6px 10px;
+            font-size: 0.8em;
+        }
+        
+        #episode-title {
+            font-size: 0.95em;
+        }
+    }
+    
+    @media (max-width: 360px) {
+        .main-buttons {
+            gap: 10px;
+        }
+        
+        #prev-btn, #next-btn, #episodes-btn {
+            width: 38px;
+            height: 38px;
+        }
+        
+        .track-info span {
+            padding: 4px 8px;
+            font-size: 0.7em;
+        }
     }
 }
 
-/* Estilos adicionales para pantallas muy pequeñas */
-@media (max-width: 360px) {
-    .left-controls {
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-    }
-    
-    .basic-controls {
-        width: 100%;
-    }
-    
-    .server-selector {
-        width: 100%;
-        max-width: 180px;
-        margin: 5px 0;
-    }
-    
-    .track-info {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .track-info span {
-        width: 100%;
-        text-align: center;
-    }
-}

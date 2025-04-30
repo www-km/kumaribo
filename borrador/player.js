@@ -5,8 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
             id: 1,
             title: "Ejemplo de Contenido 1",
             videoSources: [
-                { resolution: "Servidor HD", iframeUrl: "https://ia801307.us.archive.org/12/items/el-huesped-gwoemul-2006-en-espanol-latino/El%20Huesped%20Gwoemul%20%282006%29%20en%20Espa%C3%B1ol%20Latino.mp4" },
-                { resolution: "Servidor SD", iframeUrl: "https://ejemplo.com/embed/1?q=sd" }
+                { resolution: "Servidor HD 1280x688", iframeUrl: "https://ia801307.us.archive.org/12/items/el-huesped-gwoemul-2006-en-espanol-latino/El%20Huesped%20Gwoemul%20%282006%29%20en%20Espa%C3%B1ol%20Latino.mp4" },
+                { resolution: "Servidor SD", iframeUrl: "https://swiftplayers.com/e/nyhhnbekvxpw" },
+                { resolution: "Ok.ru", iframeUrl: "https://ok.ru/videoembed/952805034643"},
+                { resolution: "new", iframeUrl: "https://hqq.ac/e/MUNYcVZiblN3N2xMNU0zUzFuck83Zz09"},
+                { resolution: "VidHide", iframeUrl: "https://vidhidehub.com/embed/k3x7wclp3xyl"},
+                { resolution: "StreamWish", iframeUrl: "https://hlswish.com/e/vzaqi2iqcoa7"},
+                { resolution: "Dailymotion", iframeUrl: "https://geo.dailymotion.com/player.html?video=x99bn98"}
             ],
             audioLanguage: "Español",
             subtitleLanguage: "Inglés"
@@ -43,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentContentIndex = 0;
     let currentIframe = null;
     let currentServer = null;
+    let sandboxAttempted = false; // Bandera para controlar intentos con sandbox
 
     // Inicializar el reproductor
     function init() {
@@ -80,10 +86,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Cargar el iframe con el primer servidor disponible
         currentServer = content.videoSources[0];
+        sandboxAttempted = false; // Resetear la bandera al cargar nuevo contenido
         loadIframe(currentServer.iframeUrl);
     }
 
-    // Cargar iframe
+    // Cargar iframe con manejo de errores
     function loadIframe(url) {
         // Limpiar iframe anterior si existe
         if (currentIframe) {
@@ -100,7 +107,11 @@ document.addEventListener('DOMContentLoaded', function() {
         currentIframe.setAttribute('allowfullscreen', '');
         currentIframe.setAttribute('frameborder', '0');
         currentIframe.setAttribute('scrolling', 'no');
-        currentIframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation allow-popups');
+        
+        // Intentar primero con sandbox, a menos que ya hayamos fallado antes
+        if (!sandboxAttempted) {
+            currentIframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation allow-popups');
+        }
         
         // Estilos
         Object.assign(currentIframe.style, {
@@ -111,6 +122,38 @@ document.addEventListener('DOMContentLoaded', function() {
             left: '0',
             border: 'none'
         });
+        
+        // Manejar errores del iframe
+        currentIframe.onload = function() {
+            // Verificar si el iframe está bloqueado por sandbox
+            try {
+                // Intentar acceder a algo dentro del iframe
+                if (currentIframe.contentWindow && currentIframe.contentWindow.document) {
+                    // Si llegamos aquí, el sandbox funciona
+                    sandboxAttempted = false;
+                }
+            } catch (e) {
+                // Si hay un error, probablemente sea por sandbox
+                if (!sandboxAttempted) {
+                    sandboxAttempted = true;
+                    // Volver a cargar sin sandbox
+                    loadIframe(url);
+                    return;
+                }
+            }
+        };
+        
+        currentIframe.onerror = function() {
+            if (!sandboxAttempted) {
+                sandboxAttempted = true;
+                // Volver a cargar sin sandbox
+                loadIframe(url);
+                return;
+            }
+            // Si ya intentamos sin sandbox y sigue fallando
+            videoPlaceholder.style.display = 'flex';
+            console.error('Error al cargar el iframe');
+        };
         
         videoContainer.appendChild(currentIframe);
         updateNavigationButtons();
@@ -131,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (source) {
             currentServer = source;
+            sandboxAttempted = false; // Resetear la bandera al cambiar servidor
             loadIframe(source.iframeUrl);
         }
     }
@@ -226,3 +270,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Inicializar
     init();
 });
+

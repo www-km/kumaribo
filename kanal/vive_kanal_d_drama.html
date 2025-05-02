@@ -74,18 +74,30 @@
                         <span id="episode-title">Selecciona un episodio</span>
                     </div>
                     
-                    <div class="select-container">
-                        <select id="resolution-select">
-                            <option value="360p">360p</option>
-                        </select>
-                    </div>
-                    
-                    <div class="select-container">
-                        <select id="subtitle-select">
-                            <option value="en">Softsubs</option>
-                            <option value="off">Hardcoded</option>
-                        </select>
-                    </div>
+                    <!-- Selector de resolución -->
+<div class="select-container" id="resolution-select-container">
+    <div class="select-icon">
+        <svg viewBox="0 0 24 24">
+            <path d="M4 4h7V2H4c-1.1 0-2 .9-2 2v7h2V4zm6 9l-4 5h12l-3-4-2.03 2.71L10 13zm7-4.5c0-.83-.67-1.5-1.5-1.5S14 7.67 14 8.5s.67 1.5 1.5 1.5S17 9.33 17 8.5zM20 2h-7v2h7v7h2V4c0-1.1-.9-2-2-2zm0 18h-7v2h7c1.1 0 2-.9 2-2v-7h-2v7zM4 13H2v7c0 1.1.9 2 2 2h7v-2H4v-7z"/>
+        </svg>
+    </div>
+    <select id="resolution-select">
+        <option value="360p">360p</option>
+    </select>
+</div>
+
+<!-- Selector de subtítulos -->
+<div class="select-container" id="subtitle-select-container">
+    <div class="select-icon">
+        <svg viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z"/>
+        </svg>
+    </div>
+    <select id="subtitle-select">
+        <option value="en">Softsubs</option>
+        <option value="off">Hardcoded</option>
+    </select>
+</div>
                     
                     <button id="episodes-btn" class="control-btn" title="Lista de episodios">
                         <svg viewBox="0 0 34 34" width="14" height="14">

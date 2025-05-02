@@ -821,3 +821,81 @@ body::before {
         margin-bottom: 0;
     }
 }
+/* ==================== */
+/* Selectores Mejorados con SVG */
+/* ==================== */
+.select-container {
+    position: relative;
+    min-width: 80px;
+}
+
+.select-container select {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--light-color);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 5px 30px 5px 30px;
+    font-size: 0.8rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    text-align: center;
+}
+
+.select-container select:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.select-container .select-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+}
+
+.select-container .select-icon svg {
+    fill: currentColor;
+    width: 100%;
+    height: 100%;
+}
+
+.select-container::after {
+    content: "▼";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: var(--light-color);
+    font-size: 0.6rem;
+    pointer-events: none;
+}
+
+/* Estilos para móviles */
+@media (max-width: 480px) {
+    .select-container {
+        display: block !important;
+        min-width: 60px;
+    }
+    
+    .select-container select {
+        padding: 5px 25px 5px 25px;
+        font-size: 0.7rem;
+        background-color: transparent;
+        border: none;
+    }
+    
+    .select-container .select-icon {
+        display: none;
+    }
+    
+    .select-container::after {
+        right: 5px;
+        font-size: 0.5rem;
+    }
+}

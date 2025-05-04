@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://github.com/zona02/SMVL/raw/refs/heads/main/Icon/icono.webp" type="image/x-icon">
+    <title>KUMARIBO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="vive_kanal_d_drama.css">
+</head>
+<body>
+    <div class="container">
+        <div class="title-container">
+            <h1 class="player-title">Reproductor Premium</h1>
+        </div>
+        
+        <div class="video-wrapper">
+            <div class="video-container">
+                <iframe id="video-embed" frameborder="0" allowfullscreen></iframe>
+            </div>
+            
+            <div class="controls-container">
+                <div class="episode-info">
+                    <span id="episode-title">Selecciona un episodio</span>
+                </div>
+                
+                <div class="controls">
+                    <button id="prev-btn" class="control-btn" title="Episodio anterior">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    
+                    <button id="next-btn" class="control-btn" title="Siguiente episodio">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                    <!-- Agrega este botón junto a los otros controles -->
+<button id="server-btn" class="control-btn" title="Cambiar servidor">
+    <i class="fas fa-server"></i>
+</button>
+                    <button id="episodes-btn" class="control-btn" title="Lista de episodios">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    
+                    <button id="fullscreen-btn" class="control-btn" title="Pantalla completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="episodes-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="close-modal">&times;</span>
+                <h2>Episodios</h2>
+                <div class="search-container">
+                    <input type="text" id="episode-search" placeholder="Buscar episodio...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div id="episodes-list" class="episodes-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="a_couple.js"></script>
+    <script src="parallax.js"></script>
+</body>
+</html>

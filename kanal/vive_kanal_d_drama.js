@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
             id: 1,
             title: "CINE DE HORROR",
             videoSources: [
-                { resolution: "AUTO", url: "https://tinyurl.com/292pe4er" }/*,
-                { resolution: "480p", url: "https://example.com/ep1_480p.m3u8" },
+                { resolution: "AUTO", url: "https://tinyurl.com/292pe4er" },
+                { resolution: "480p", url: "https://mdstrm.com/live-stream/574463697b9817cf0886fc17?jsapi=true&autoplay=true&access_token=WjrysS4kQRvkmOtfIyN5uov512BOF9cBrAG8j4lw0vqFZfZw2Eua206uk05zQxpV5V5XGeUyUUo&controls_bar[showFullscreen]=true" }/*,
                 { resolution: "720p", url: "https://example.com/ep1_720p.m3u8" },
                 { resolution: "1080p", url: "https://example.com/ep1_1080p.m3u8" }*/
             ],

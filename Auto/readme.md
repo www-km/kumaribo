@@ -1,0 +1,1 @@
+Archivos para resolucion automatica

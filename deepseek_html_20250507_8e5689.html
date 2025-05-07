@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor M3U8 con hls.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .player-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+        #video {
+            width: 100%;
+            background-color: #000;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .error {
+            background-color: #ffdddd;
+            color: #d8000c;
+        }
+        .info {
+            background-color: #e7f3fe;
+            color: #00529b;
+        }
+        .logs {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reproductor M3U8 con hls.js</h1>
+        
+        <div class="controls">
+            <input type="text" id="streamUrl" placeholder="Ingresa la URL M3U8 aquí..." value="">
+            <button id="playBtn">Reproducir</button>
+            <button id="stopBtn">Detener</button>
+        </div>
+        
+        <div id="status" class="status"></div>
+        
+        <div class="player-container">
+            <video id="video" controls></video>
+        </div>
+        
+        <div class="logs" id="logs"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('video');
+            const streamUrlInput = document.getElementById('streamUrl');
+            const playBtn = document.getElementById('playBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const statusDiv = document.getElementById('status');
+            const logsDiv = document.getElementById('logs');
+            
+            let hls = null;
+            
+            function logMessage(message, isError = false) {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = document.createElement('div');
+                logEntry.textContent = `[${timestamp}] ${message}`;
+                if (isError) {
+                    logEntry.style.color = '#d8000c';
+                }
+                logsDiv.appendChild(logEntry);
+                logsDiv.scrollTop = logsDiv.scrollHeight;
+            }
+            
+            function clearStatus() {
+                statusDiv.className = 'status';
+                statusDiv.textContent = '';
+            }
+            
+            function showStatus(message, isError = false) {
+                statusDiv.className = isError ? 'status error' : 'status info';
+                statusDiv.textContent = message;
+            }
+            
+            function destroyHls() {
+                if (hls) {
+                    hls.destroy();
+                    hls = null;
+                    logMessage('Reproductor HLS destruido');
+                }
+            }
+            
+            function playStream(url) {
+                clearStatus();
+                destroyHls();
+                
+                if (!url) {
+                    showStatus('Por favor ingresa una URL M3U8', true);
+                    return;
+                }
+                
+                if (Hls.isSupported()) {
+                    hls = new Hls({
+                        maxBufferLength: 30,
+                        maxMaxBufferLength: 600,
+                        maxBufferSize: 60 * 1000 * 1000,
+                        maxBufferHole: 0.5,
+                        lowLatencyMode: false,
+                        enableWorker: true
+                    });
+                    
+                    hls.loadSource(url);
+                    hls.attachMedia(video);
+                    
+                    hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                        logMessage('Manifiesto analizado, iniciando reproducción...');
+                        video.play()
+                            .then(() => {
+                                showStatus('Reproduciendo: ' + url);
+                                logMessage('Reproducción iniciada con éxito');
+                            })
+                            .catch(err => {
+                                showStatus('Error al iniciar reproducción: ' + err.message, true);
+                                logMessage('Error al iniciar reproducción: ' + err.message, true);
+                            });
+                    });
+                    
+                    hls.on(Hls.Events.ERROR, function(event, data) {
+                        let errorType = data.type;
+                        let errorDetails = data.details;
+                        let errorFatal = data.fatal;
+                        
+                        let errorMsg = `Error: ${errorDetails} (${errorType})`;
+                        
+                        if (errorFatal) {
+                            showStatus(errorMsg, true);
+                            logMessage(errorMsg + ' - FATAL', true);
+                            
+                            switch(data.details) {
+                                case Hls.ErrorDetails.MANIFEST_LOAD_ERROR:
+                                case Hls.ErrorDetails.MANIFEST_LOAD_TIMEOUT:
+                                case Hls.ErrorDetails.MANIFEST_PARSING_ERROR:
+                                    logMessage('Intentando recuperarse...');
+                                    hls.startLoad();
+                                    break;
+                                default:
+                                    destroyHls();
+                                    break;
+                            }
+                        } else {
+                            logMessage(errorMsg, true);
+                        }
+                    });
+                    
+                    hls.on(Hls.Events.FRAG_LOADED, function(event, data) {
+                        logMessage(`Fragmento cargado: ${data.frag.url}`);
+                    });
+                    
+                    logMessage(`Iniciando carga de stream desde: ${url}`);
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    // Soporte nativo para HLS (Safari/iOS)
+                    video.src = url;
+                    video.addEventListener('loadedmetadata', function() {
+                        video.play()
+                            .then(() => {
+                                showStatus('Reproduciendo (soporte nativo): ' + url);
+                                logMessage('Reproducción iniciada con soporte nativo');
+                            })
+                            .catch(err => {
+                                showStatus('Error al iniciar reproducción: ' + err.message, true);
+                                logMessage('Error al iniciar reproducción nativa: ' + err.message, true);
+                            });
+                    });
+                    logMessage(`Usando soporte nativo para cargar: ${url}`);
+                } else {
+                    showStatus('Tu navegador no soporta la reproducción HLS', true);
+                    logMessage('Error: Navegador no compatible con HLS', true);
+                }
+            }
+            
+            playBtn.addEventListener('click', function() {
+                const url = streamUrlInput.value.trim();
+                playStream(url);
+            });
+            
+            stopBtn.addEventListener('click', function() {
+                destroyHls();
+                video.pause();
+                video.removeAttribute('src');
+                video.load();
+                clearStatus();
+                logMessage('Reproducción detenida');
+            });
+            
+            // Ejemplo de URL (puedes eliminarlo o cambiarlo)
+            streamUrlInput.value = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+            
+            logMessage('Reproductor listo. Ingresa una URL M3U8 y haz clic en Reproducir.');
+        });
+    </script>
+</body>
+</html>

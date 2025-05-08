@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUMARIBO TV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .logo-container {
+            position: relative;
+            text-align: center;
+            z-index: 10;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .main-text, .sub-text {
+            display: inline-block;
+            position: relative;
+        }
+
+        .main-text span, .sub-text span {
+            display: inline-block;
+            font-size: 5vw;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .main-text span {
+            color: #fff;
+            text-shadow: 0 0 5px #fff;
+        }
+
+        .sub-text span {
+            font-size: 3vw;
+            margin-left: 5px;
+            color: #ff4d4d;
+        }
+
+        .light-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            opacity: 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-text span {
+                font-size: 10vw;
+            }
+            .sub-text span {
+                font-size: 6vw;
+            }
+        }
+
+        /* Efectos de luz navideña */
+        .christmas-light {
+            animation: light-pulse 1.5s infinite alternate;
+        }
+
+        @keyframes light-pulse {
+            0% {
+                text-shadow: 0 0 5px currentColor;
+            }
+            100% {
+                text-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+            }
+        }
+
+        .red { color: #ff4d4d !important; }
+        .green { color: #4dff4d !important; }
+        .blue { color: #4d4dff !important; }
+        .yellow { color: #ffff4d !important; }
+        .purple { color: #ff4dff !important; }
+        .cyan { color: #4dffff !important; }
+        .orange { color: #ffa64d !important; }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="logo-container" id="logoContainer">
+        <div class="main-text" id="mainText"></div>
+        <div class="sub-text" id="subText"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Crear estrellas de fondo
+            createStars();
+            
+            // Textos del logo
+            const mainText = "KUMARIBO";
+            const subText = "TV";
+            
+            const mainTextElement = document.getElementById('mainText');
+            const subTextElement = document.getElementById('subText');
+            const logoContainer = document.getElementById('logoContainer');
+            
+            // Colores para el efecto navideño
+            const colors = ['red', 'green', 'blue', 'yellow', 'purple', 'cyan', 'orange'];
+            
+            // Animación de entrada
+            animateLogo();
+            
+            function createStars() {
+                const starsContainer = document.getElementById('stars');
+                const starCount = 200;
+                
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    
+                    // Tamaño aleatorio entre 1 y 3px
+                    const size = Math.random() * 2 + 1;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    
+                    // Posición aleatoria
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    
+                    // Duración de animación aleatoria
+                    star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                    
+                    // Retraso aleatorio
+                    star.style.animationDelay = `${Math.random() * 5}s`;
+                    
+                    starsContainer.appendChild(star);
+                }
+            }
+            
+            function animateLogo() {
+                // Primero animamos el texto principal
+                typeWriter(mainText, mainTextElement, () => {
+                    // Cuando termina el texto principal, animamos el subtítulo
+                    typeWriter(subText, subTextElement, () => {
+                        // Cuando termina todo, activamos el efecto navideño
+                        activateChristmasLights();
+                        
+                        // Después de 5 segundos, animamos la salida
+                        setTimeout(() => {
+                            animateExit();
+                        }, 5000);
+                    });
+                });
+            }
+            
+            function typeWriter(text, element, callback) {
+                let i = 0;
+                const speed = 150; // velocidad en ms
+                
+                function type() {
+                    if (i < text.length) {
+                        const span = document.createElement('span');
+                        span.textContent = text.charAt(i);
+                        span.style.opacity = '0';
+                        span.style.transform = 'translateY(20px) rotateX(90deg)';
+                        element.appendChild(span);
+                        
+                        // Animación de aparición
+                        setTimeout(() => {
+                            span.style.opacity = '1';
+                            span.style.transform = 'translateY(0) rotateX(0)';
+                            
+                            // Efecto de sonido (simulado con cambio de tamaño)
+                            span.style.display = 'inline-block';
+                            span.style.transform = 'scale(1.2)';
+                            setTimeout(() => {
+                                span.style.transform = 'scale(1)';
+                            }, 100);
+                        }, 50);
+                        
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        if (callback) callback();
+                    }
+                }
+                
+                type();
+            }
+            
+            function activateChristmasLights() {
+                const allLetters = [
+                    ...document.querySelectorAll('.main-text span'),
+                    ...document.querySelectorAll('.sub-text span')
+                ];
+                
+                // Función para cambiar colores
+                function changeColors() {
+                    allLetters.forEach(letter => {
+                        // Remover todas las clases de color
+                        colors.forEach(color => {
+                            letter.classList.remove(color);
+                            letter.classList.remove('christmas-light');
+                        });
+                        
+                        // Aplicar un color aleatorio con un 70% de probabilidad
+                        if (Math.random() > 0.3) {
+                            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                            letter.classList.add(randomColor);
+                            letter.classList.add('christmas-light');
+                        }
+                    });
+                }
+                
+                // Cambiar colores cada 500ms
+                const colorInterval = setInterval(changeColors, 500);
+                
+                // Guardar el intervalo para limpiarlo después
+                window.christmasInterval = colorInterval;
+            }
+            
+            function animateExit() {
+                // Limpiar el intervalo de luces navideñas
+                if (window.christmasInterval) {
+                    clearInterval(window.christmasInterval);
+                }
+                
+                const allLetters = [
+                    ...document.querySelectorAll('.main-text span'),
+                    ...document.querySelectorAll('.sub-text span')
+                ];
+                
+                // Animación de salida en orden inverso
+                let i = allLetters.length - 1;
+                
+                function removeLetter() {
+                    if (i >= 0) {
+                        const letter = allLetters[i];
+                        letter.style.opacity = '0';
+                        letter.style.transform = 'translateY(-20px) rotateX(90deg)';
+                        
+                        // Efecto de sonido (simulado)
+                        letter.style.transform = 'scale(0.8)';
+                        
+                        i--;
+                        setTimeout(removeLetter, 100);
+                    } else {
+                        // Cuando termina la animación de salida, redirigir
+                        setTimeout(() => {
+                            window.location.href = "https://tinyurl.com/2desfxh8"; // Cambia esta URL
+                        }, 1000);
+                    }
+                }
+                
+                removeLetter();
+            }
+            
+            // Redirección al hacer clic
+            logoContainer.addEventListener('click', function() {
+                animateExit();
+            });
+        });
+    </script>
+</body>
+</html>

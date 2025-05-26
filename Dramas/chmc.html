@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://github.com/zona02/SMVL/raw/refs/heads/main/Icon/icono.webp" type="image/x-icon">
+    <title>KUMARIBO - Gótico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=MedievalSharp&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <div class="video-section">
+            <div class="container">
+                <div class="title-container">
+                    <h1 class="player-title">Cine kumaribo 2025</h1>
+                    <div class="gothic-ornament"></div>
+                </div>
+                
+                <div class="video-wrapper" id="video-wrapper">
+                    <div class="video-container">
+                        <video id="video-element" controls></video>
+                    </div>
+                    
+                    <div class="controls-container">
+                        <div class="episode-info">
+                            <span id="episode-title">Selecciona un episodio</span>
+                            <span id="episode-number" class="gothic-number">I</span>
+                        </div>
+                        
+                        <div class="controls">
+                            <button id="play-pause-btn" class="control-btn" title="Play/Pausa">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            
+                            <button id="prev-btn" class="control-btn" title="Episodio anterior">
+                                <i class="fas fa-step-backward"></i>
+                            </button>
+                            
+                            <button id="next-btn" class="control-btn" title="Siguiente episodio">
+                                <i class="fas fa-step-forward"></i>
+                            </button>
+                            
+                            <button id="server-btn" class="control-btn" title="Cambiar servidor">
+                                <i class="fas fa-skull"></i>
+                            </button>
+                            
+                            <button id="episodes-btn" class="control-btn" title="Lista de episodios">
+                                <i class="fas fa-book-dead"></i>
+                            </button>
+                            
+                            <button id="fullscreen-btn" class="control-btn" title="Pantalla completa">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <div class="series-info">
+                <h2 class="series-title">Carrera Hacia Mi Corazón</h2>
+                <div class="gothic-divider"></div>
+                <p class="series-description">Él es mi hermanastro: Enzo Hawthorne, la estrella emergente de la F1, el mejor piloto del mundo y heredero de una fortuna. Yo soy Sierra Fernando, hija de un mecánico criada en un taller grasiento; alguien que nunca perteneció a su mundo de velocidad, patrocinadores y papeles de seda. Nunca estuvimos destinados a chocar, pero el día que nuestros padres se comprometieron, él irrumpió en mi vida. Bajo sus trofeos yace una herida. Tras mi desafío, empiezo a revelar mis inseguridades... y a preocuparme por él. Mientras entrena para Abu Dabi, los enemigos se acercan, y nosotros también. Cuando nuestro amor cruza la línea, no hay vuelta atrás.</p>
+                
+                <div class="episodes-grid" id="episodes-grid">
+                    <!-- Episodios se generarán dinámicamente aquí -->
+                </div>
+            </div>
+        </div>
+        
+        <div id="episodes-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="close-modal">&times;</span>
+                <h2><i class="fas fa-book-dead"></i> LISTA DE EPISODIOS</h2>
+                <div class="search-container">
+                    <input type="text" id="episode-search" placeholder="Buscar en las tinieblas...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div id="episodes-list" class="episodes-list"></div>
+            </div>
+        </div>
+        
+        <div id="server-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" id="close-server-modal">&times;</span>
+                <h2><i class="fas fa-skull"></i> SERVIDORES</h2>
+                <div id="server-list" class="episodes-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="parallax.js"></script>
+    <script src="chmc.js"></script>
+</body>
+</html>

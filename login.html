@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Pikabox</title>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyClah7_9pqqYaAwbIGKSoAT5XVoQk4P6qk",
+      authDomain: "yacine-box.firebaseapp.com",
+      projectId: "yacine-box",
+      storageBucket: "yacine-box.firebasestorage.app",
+      messagingSenderId: "1029009864445",
+      appId: "1:1029009864445:web:2d89f87b76fd685a66f094",
+      measurementId: "G-1C88DSEBQG"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    function googleSignIn() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then(function (result) {
+          result.user.getIdToken().then(function(idToken) {
+            alert("ID TOKEN:\n\n" + idToken);
+            console.log("ID TOKEN:", idToken);
+          });
+        })
+        .catch(function (error) {
+          alert("Error: " + error.message);
+        });
+    }
+  </script>
+</head>
+<body>
+  <h2>Iniciar sesión en Pikabox</h2>
+  <button onclick="googleSignIn()">🔐 Login con Google</button>
+</body>
+</html>
